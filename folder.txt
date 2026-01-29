@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>KOEFICENT I GËZUAR</title>
+<style>
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header kuqe-e-zi */
+header {
+    background: linear-gradient(90deg, #e60000, #000000);
+    color: white;
+    padding: 25px;
+    font-size: 36px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+/* Panel i ndeshjes */
+.match {
+    background:white;
+    margin:15px 0;
+    padding:15px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Odds */
+.odds span {
+    background:#e60000;
+    color:white;
+    padding:6px 10px;
+    border-radius:5px;
+    margin-right:8px;
+    display:inline-block;
+    font-weight:bold;
+}
+
+/* Emblema skuadre (simbolik) */
+.team-icon {
+    display:inline-block;
+    width:24px;
+    height:24px;
+    margin-right:6px;
+    vertical-align:middle;
+    background-color:#000;
+    border-radius:50%;
+}
+</style>
+</head>
+
+<body>
+
+<header>KOEFICENT I GËZUAR</header>
+
+<div id="matches"></div>
+
+<script>
+// Demo ndeshje
+let matches = [
+ {home:"Manchester United", away:"Liverpool", odds:{1:2.1,X:3.2,2:3.0}},
+ {home:"Arsenal", away:"Chelsea", odds:{1:1.9,X:3.5,2:4.0}},
+ {home:"Barcelona", away:"Real Madrid", odds:{1:2.5,X:3.0,2:2.8}},
+ {home:"Juventus", away:"Inter", odds:{1:2.0,X:3.1,2:3.4}},
+ {home:"PSG", away:"Marseille", odds:{1:1.8,X:3.6,2:4.2}},
+ {home:"Bayern", away:"Dortmund", odds:{1:2.2,X:3.0,2:3.1}},
+ {home:"Ajax", away:"PSV", odds:{1:2.3,X:3.3,2:2.9}},
+ {home:"Roma", away:"Lazio", odds:{1:2.4,X:3.2,2:3.0}}
+];
+
+// Funksion për të ndryshuar odds live
+function randomize(o){ return (o*(0.95+Math.random()*0.1)).toFixed(2); }
+
+// Render ndeshjet
+function render(){
+ document.getElementById("matches").innerHTML="";
+ matches.forEach(m=>{
+  m.odds[1]=randomize(m.odds[1]);
+  m.odds.X=randomize(m.odds.X);
+  m.odds[2]=randomize(m.odds[2]);
+  document.getElementById("matches").innerHTML+=`
+   <div class="match">
+    <b><span class="team-icon"></span>${m.home} vs <span class="team-icon"></span>${m.away}</b><br><br>
+    <div class="odds">
+     <span>1: ${m.odds[1]}</span>
+     <span>X: ${m.odds.X}</span>
+     <span>2: ${m.odds[2]}</span>
+    </div>
+   </div>`;
+ });
+}
+
+// Fillimi dhe rifreskimi çdo 4 sekonda
+render();
+setInterval(render,4000);
+</script>
+
+</body>
+</html>
